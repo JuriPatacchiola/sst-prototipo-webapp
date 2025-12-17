@@ -1,10 +1,20 @@
-
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import DetailTravel from "./pages/DetailTravel"
+import HomePage from "./pages/HomePage"
 
 function App() {
 
 
   return (
     <>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<DefaultLayout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/detail/:id" element={<DetailTravel />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
