@@ -46,6 +46,9 @@ const SearchBar = ({ users, onSearchResults }) => {
                     placeholder="Cerca partecipante per nome e cognome..."
                     aria-label="Cerca partecipante"
                 />
+                <button className="btn btn-primary px-4" type="submit">
+                    <i className="bi bi-search"></i> Cerca
+                </button>
             </div>
 
         </form>
