@@ -36,14 +36,19 @@ const SearchBar = ({ users, onSearchResults }) => {
     }
 
     return (
-        <form onSubmit={handleSearch}>
-            <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Cerca partecipante per nome e cognome..."
-            />
-        </form >
+        <form onSubmit={handleSearch} className="w-100">
+            <div className="input-group ">
+                <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Cerca partecipante per nome e cognome..."
+                    aria-label="Cerca partecipante"
+                />
+            </div>
+
+        </form>
     )
 }
 
