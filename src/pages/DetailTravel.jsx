@@ -5,7 +5,7 @@ import { useTravels } from "../contexts/TravelsContext";
 import users from "../data/users";
 
 export default function DetailTravel() {
-    const { id } = useParams(); // ottengo id dall'URL
+    const { id } = useParams();
 
     const travelId = Number(id);
     const travelUsers = users.filter((user) => user.travel_id === travelId);
@@ -13,56 +13,51 @@ export default function DetailTravel() {
     const { list } = useTravels();
     const travelName = list.find((current) => current.id === travelId);
 
-    // stato iniziale: mostro tutti gli utenti già filtrati per il singolo viaggio
     const [displayedUsers, setDisplayedUsers] = useState(travelUsers);
 
     return (
         <div className="container pt-5 pb-5 my-5">
-
-            <h1 className="d-flex justify-content-center">
-                {travelName.destination} trip
+            <h1 className="text-center mb-4 fw-bold text-uppercase">
+                {travelName?.destination} trip
             </h1>
-            <SearchBar users={displayedUsers} onSearchResults={setDisplayedUsers} />
+
+            <div className="d-flex justify-content-center mb-5">
+                <div className="w-100" style={{ maxWidth: "600px" }}>
+                    <SearchBar users={travelUsers} onSearchResults={setDisplayedUsers} />
+                </div>
+            </div>
+
             <div className="accordion" id="accordionExample">
-                {travelUsers.map((user, i) => (
+                {displayedUsers.map((user) => (
                     <div key={user.id} className="accordion-item">
                         <h2 className="accordion-header">
                             <button
                                 className="accordion-button collapsed"
                                 type="button"
                                 data-bs-toggle="collapse"
-                                data-bs-target={`#collapse-${i}`}
+                                data-bs-target={`#collapse-${user.id}`}
                                 aria-expanded="false"
-                                aria-controls={`#collapse-${i}`}
-                            >
+                                aria-controls={`collapse-${user.id}`}>
                                 {user.first_name} {user.last_name}
                             </button>
                         </h2>
                         <div
-                            id={`collapse-${i}`}
+                            id={`collapse-${user.id}`}
                             className="accordion-collapse collapse"
-                            data-bs-parent='#accordionExample'
-                        >
+                            data-bs-parent="#accordionExample">
                             <div className="accordion-body">
-                                <ul className="list-group list-group-flush">
-                                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                                        <strong>Email:</strong>
-                                        <span className="text-secondary">{user.email}</span>
-                                    </li>
-                                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                                        <strong>Codice ID:</strong>
-                                        <span className="badge bg-light text-dark border">{user.id_code}</span>
-                                    </li>
-                                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                                        <strong>Telefono:</strong>
-                                        <span className="text-secondary">{user.phone}</span>
-                                    </li>
-                                </ul>
+                                <div className="mb-2"><strong>Email:</strong> {user.email}</div>
+                                <div className="mb-2"><strong>ID Code:</strong> <code>{user.id_code}</code></div>
+                                <div><strong>Phone:</strong> {user.phone}</div>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
+
+            {displayedUsers.length === 0 && (
+                <p className="text-center mt-4 text-muted">Nessun partecipante trovato.</p>
+            )}
         </div>
     );
 }
