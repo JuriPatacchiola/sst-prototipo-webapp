@@ -1,19 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import AddUsersForm from "../components/AddUsersForm";
 import SearchBar from "../components/SearchBar";
 import { useTravels } from "../contexts/TravelsContext";
+import { useUsers } from "../contexts/UsersContext";
 import users from "../data/users";
 
 export default function DetailTravel() {
     const { id } = useParams();
 
     const travelId = Number(id);
+    const { usersList } = useUsers();
     const travelUsers = users.filter((user) => user.travel_id === travelId);
+
+
 
     const { list } = useTravels();
     const travelName = list.find((current) => current.id === travelId);
 
     const [displayedUsers, setDisplayedUsers] = useState(travelUsers);
+
+    useEffect(() => {
+        setDisplayedUsers(travelUsers);
+    }, [usersList]);
 
     return (
         <div className="container pt-5 pb-5 my-5">
@@ -53,6 +62,9 @@ export default function DetailTravel() {
                         </div>
                     </div>
                 ))}
+                <div>
+                    <AddUsersForm id={travelId} />
+                </div>
             </div>
 
             {displayedUsers.length === 0 && (
