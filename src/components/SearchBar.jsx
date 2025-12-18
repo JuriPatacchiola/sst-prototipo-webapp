@@ -37,7 +37,7 @@ const SearchBar = ({ users, onSearchResults }) => {
 
     return (
         <form onSubmit={handleSearch} className="w-100">
-            <div className="input-group ">
+            <div className="input-group shadow-sm">
                 <input
                     type="text"
                     className="form-control form-control-lg"
@@ -50,7 +50,6 @@ const SearchBar = ({ users, onSearchResults }) => {
                     <i className="bi bi-search"></i> Cerca
                 </button>
             </div>
-
         </form>
     )
 }
