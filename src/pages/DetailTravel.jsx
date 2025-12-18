@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useParams } from "react-router-dom"
 import SearchBar from "../components/SearchBar"
 import travels from "../data/travels"
-import users from "../data/Users"
+import users from "../data/users"
 
 export default function DetailTravel() {
 
